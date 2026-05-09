@@ -1,0 +1,83 @@
+<div class="container mt-5">
+
+  <h2 class="text-center mb-4">Text to SQL</h2>
+
+  <!-- Example prompts -->
+  <div class="mb-3">
+    <label class="form-label">Example Prompts</label>
+    <select class="form-select" (change)="setExample($event)">
+      <option selected disabled>Select example...</option>
+      <option>Show all employees</option>
+      <option>Top 2 highest paid employees per country</option>
+      <option>Employees earning above average salary</option>
+    </select>
+  </div>
+
+  <!-- Input -->
+  <div class="input-group mb-3">
+    <input type="text"
+           class="form-control"
+           placeholder="Ask your question..."
+           [(ngModel)]="question"
+           (keyup.enter)="ask()">
+
+    <button class="btn btn-primary"
+            (click)="ask()"
+            [disabled]="loading">
+      Ask
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Response -->
+  <div *ngIf="response !== null && response !== undefined">
+
+    <!-- SQL -->
+    <h5>Generated SQL</h5>
+    <pre>{{ response.generatedSql }}</pre>
+
+    <!-- Data Table -->
+    <ng-container *ngIf="response?.result as data">
+
+      <!-- Table -->
+      <table class="table table-bordered table-striped"
+             *ngIf="data.length > 0">
+
+        <thead>
+          <tr>
+            <th *ngFor="let col of getColumns(data)">
+              {{ col }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td *ngFor="let col of getColumns(data)">
+              {{ row[col] }}
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <!-- No Data -->
+      <p *ngIf="data.length === 0" class="text-muted">
+        No data found
+      </p>
+
+    </ng-container>
+
+  </div>
+
+</div>

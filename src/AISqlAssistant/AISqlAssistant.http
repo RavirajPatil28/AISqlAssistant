@@ -1,0 +1,31 @@
+@AISqlAssistant_HostAddress = https://localhost:7271
+
+### Show all employees
+POST {{AISqlAssistant_HostAddress}}/api/query
+Content-Type: application/json
+
+{
+  "question": "Show all employees"
+}
+
+###
+
+### Top 2 highest paid employees per country
+POST {{AISqlAssistant_HostAddress}}/api/query
+Content-Type: application/json
+
+{
+  "question": "Top 2 highest paid employees per country"
+}
+
+###
+
+### Employees earning above average salary
+POST {{AISqlAssistant_HostAddress}}/api/query
+Content-Type: application/json
+
+{
+  "question": "Employees earning above average salary"
+}
+
+###
